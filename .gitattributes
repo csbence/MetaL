@@ -1,1 +1,2 @@
 resources/covtype/covtype.data filter=lfs diff=lfs merge=lfs -text
+resources/covtype/covtype.data.gz filter=lfs diff=lfs merge=lfs -text
