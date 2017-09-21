@@ -1,6 +1,7 @@
 import numpy as np
 import pandas
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 
 
 def read_dataframe(filename):
@@ -22,10 +23,12 @@ def do_logistic_regression(dataframe):
     y = dataframe.iloc[:, -1:].values
     y = np.ravel(y)
 
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.4, random_state=0)
+
     regression = LogisticRegression(n_jobs=-1)
-    # regression.set_params(dataframe.columns.tolist())
-    regression.fit(X=X, y=y)
-    print(regression.score(X=X, y=y))
+    regression.fit(X=X_train, y=y_train)
+    print(regression.score(X=X_test, y=y_test))
 
 
 def main():
