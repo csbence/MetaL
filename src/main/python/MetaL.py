@@ -3,6 +3,7 @@ import pandas
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
+from time import time
 
 
 def read_dataframe(filename):
@@ -50,9 +51,19 @@ def predictors_labels(dataframe):
     return X, y
 
 
+def timeit(function):
+    start_time = time()
+    function()
+    end_time = time()
+    print('Execution time %d' % (end_time - start_time))
+
+
 def main():
     dataframe = read_dataframe("../../../resources/covtype/covtype.data.gz")
-    do_logistic_regression(dataframe)
+    foo = lambda: decision_tree(dataframe)
+
+    timeit('logistic_regression(dataframe)', number=1)
+    # timeit('decision_tree(dataframe', number=1)
 
 
 if __name__ == "__main__":
