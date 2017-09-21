@@ -26,18 +26,21 @@ def logistic_regression(dataframe):
         X, y, test_size=0.4, random_state=0)
 
     regression = LogisticRegression(n_jobs=-1)
-    regression.fit(X=X, y=y)
+    regression.fit(X=X_train, y=y_train)
     print('Logistic regression accuracy:')
-    print(regression.score(X=X, y=y))
+    print(regression.score(X=X_test, y=y_test))
 
 
 def decision_tree(dataframe):
     X, y = predictors_labels(dataframe)
 
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.4, random_state=0)
+
     tree_classifier = DecisionTreeClassifier()
-    tree_classifier.fit(X=X, y=y)
+    tree_classifier.fit(X=X_train, y=y_train)
     print('Decision Tree accuracy:')
-    print(tree_classifier.score(X=X, y=y))
+    print(tree_classifier.score(X=X_test, y=y_test))
 
 
 def predictors_labels(dataframe):
