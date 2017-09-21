@@ -1,6 +1,7 @@
 import numpy as np
 import pandas
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 
 
 def read_dataframe(filename):
@@ -17,20 +18,35 @@ def read_dataframe(filename):
     return dataframe
 
 
-def do_logistic_regression(dataframe):
+def logistic_regression(dataframe):
+    X, y = predictors_labels(dataframe)
+
+    regression = LogisticRegression(n_jobs=-1)
+    regression.fit(X=X, y=y)
+    print('Logistic regression accuracy:')
+    print(regression.score(X=X, y=y))
+
+
+def decision_tree(dataframe):
+    X, y = predictors_labels(dataframe)
+
+    tree_classifier = DecisionTreeClassifier()
+    tree_classifier.fit(X=X, y=y)
+    print('Decision Tree accuracy:')
+    print(tree_classifier.score(X=X, y=y))
+
+
+def predictors_labels(dataframe):
     X = dataframe.iloc[:, :-1].values
     y = dataframe.iloc[:, -1:].values
     y = np.ravel(y)
-
-    regression = LogisticRegression(n_jobs=-1)
-    # regression.set_params(dataframe.columns.tolist())
-    regression.fit(X=X, y=y)
-    print(regression.score(X=X, y=y))
+    return X, y
 
 
 def main():
     dataframe = read_dataframe("../../../resources/covtype/covtype.data.gz")
-    do_logistic_regression(dataframe)
+    logistic_regression(dataframe)
+    decision_tree(dataframe)
 
 
 if __name__ == "__main__":
