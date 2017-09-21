@@ -1,9 +1,6 @@
 import numpy as np
 import pandas
-import matplotlib.pyplot as plt
-
 from sklearn.linear_model import LogisticRegression
-from sklearn import datasets
 
 
 def read_dataframe(filename):
@@ -21,7 +18,14 @@ def read_dataframe(filename):
 
 
 def do_logistic_regression(dataframe):
-    pass
+    X = dataframe.iloc[:, :-1].values
+    y = dataframe.iloc[:, -1:].values
+    y = np.ravel(y)
+
+    regression = LogisticRegression(n_jobs=-1)
+    # regression.set_params(dataframe.columns.tolist())
+    regression.fit(X=X, y=y)
+    print(regression.score(X=X, y=y))
 
 
 def main():
