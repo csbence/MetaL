@@ -1,11 +1,12 @@
+from time import time
+
 import numpy as np
 import pandas
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from time import time
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 
 def read_dataframe(filename):
@@ -30,7 +31,7 @@ def logistic_regression(dataframe):
 
     regression = LogisticRegression(n_jobs=-1)
     regression.fit(X=X_train, y=y_train)
-    print('Logistic regression accuracy:')
+    print('Logistic Regression Accuracy:')
     print(regression.score(X=X_test, y=y_test))
 
 
@@ -42,8 +43,9 @@ def decision_tree(dataframe):
 
     tree_classifier = DecisionTreeClassifier()
     tree_classifier.fit(X=X_train, y=y_train)
-    print('Decision Tree accuracy:')
+    print('Decision Tree Accuracy:')
     print(tree_classifier.score(X=X_test, y=y_test))
+
 
 def discriminant_analysis(dataframe):
     X, y = predictors_labels(dataframe)
@@ -55,6 +57,7 @@ def discriminant_analysis(dataframe):
     disc.fit(X_train, y_train)
     score = disc.score(X_test, y_test)
     print('Discriminant Analysis Accuracy: {}'.format(score))
+
 
 def nearest_neighbors(dataframe):
     X, y = predictors_labels(dataframe)
@@ -79,7 +82,7 @@ def timeit(function):
     start_time = time()
     function()
     end_time = time()
-    print('Execution time %d' % (end_time - start_time))
+    print('Execution time %ds' % (end_time - start_time))
 
 
 def main():
