@@ -1,6 +1,8 @@
 import numpy as np
 import pandas
 from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 
@@ -42,6 +44,28 @@ def decision_tree(dataframe):
     print('Decision Tree accuracy:')
     print(tree_classifier.score(X=X_test, y=y_test))
 
+def discriminant_analysis(dataframe):
+    X, y = predictors_labels(dataframe)
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.4, random_state=0)
+
+    disc = LinearDiscriminantAnalysis()
+    disc.fit(X_train, y_train)
+    score = disc.score(X_test, y_test)
+    print('Discriminant Analysis Accuracy: {}'.format(score))
+
+def nearest_neighbors(dataframe):
+    X, y = predictors_labels(dataframe)
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.4, random_state=0)
+
+    knn = KNeighborsClassifier(n_neighbors=5)
+    knn.fit(X_train, y_train)
+    score = knn.score(X_test, y_test)
+    print('KNN Accuracy: {}'.format(score))
+
 
 def predictors_labels(dataframe):
     X = dataframe.iloc[:, :-1].values
@@ -52,7 +76,7 @@ def predictors_labels(dataframe):
 
 def main():
     dataframe = read_dataframe("../../../resources/covtype/covtype.data.gz")
-    do_logistic_regression(dataframe)
+    nearest_neighbors(dataframe)
 
 
 if __name__ == "__main__":
